@@ -23,11 +23,14 @@ const Nav = ({ Logout }) => {
           <NavLink activeClassName="active" style={navStyle} to={`/dashboard`}>
             <li>Dashboard</li>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             activeClassName="active"
             style={navStyle}
             to={`/profile/${user}`}
           >
+            <li>Profile</li>
+          </NavLink> */}
+          <NavLink activeClassName="active" style={navStyle} to={`/profile`}>
             <li>Profile</li>
           </NavLink>
           <li>
