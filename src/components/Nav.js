@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Nav = ({ Logout }) => {
-  const user = localStorage.getItem("username");
+  // const user = localStorage.getItem("username");
   const navStyle = {
     color: "whitesmoke",
     textDecoration: "none",

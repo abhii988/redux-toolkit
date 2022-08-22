@@ -94,7 +94,8 @@ const Login = ({ auth, setAuth }) => {
       return error;
     }
     LoginInfo(details);
-    navigate(`/profile/${details.name}`);
+    // navigate(`/profile/${details.name}`);
+    navigate("/");
   };
 
   return (
