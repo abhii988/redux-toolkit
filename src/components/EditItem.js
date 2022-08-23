@@ -11,7 +11,6 @@ const EditItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.totalItems);
-  console.log(data);
   const handleChange = (e) => {
     dispatch(inputChange({ [e.target.name]: e.target.value }));
   };

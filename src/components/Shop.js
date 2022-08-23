@@ -2,15 +2,22 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./shop.css";
-import { deleteItem, edit, fetchData } from "../redux/actions";
+import { deleteItem, edit, fetchData, dataLoader } from "../redux/actions";
 import { store } from "../redux/store";
 //https://picsum.photos/500?random=1
 
-const Shop = () => {
+const Shop = ({ error, setError }) => {
+  console.log(error);
   const data = useSelector((state) => state.totalItems);
+  console.log(data, "data");
+
   const [activeLink, setActiveLink] = useState();
   const fetchButton = () => {
-    store.dispatch(fetchData());
+    store.dispatch(fetchData()).catch((err) => {
+      setError(err.message);
+      // console.log("fetch error msg", err.message);
+    });
+    store.dispatch(dataLoader(true));
   };
 
   const handleDelete = (id) => {
@@ -56,67 +63,91 @@ const Shop = () => {
       </button>
       <br />
       <hr />
-      <div className="app_user">
-        {value.map((val) => (
-          <div key={val.id}>
-            <Fragment>
-              <img src={val.image} alt={val.fname} />
-              <Phrase user={val} />
-              <div className="app_icons">
-                {icons.map((icon, index) => (
-                  <i
-                    className={icon}
-                    key={index}
-                    onMouseEnter={() => activeLinkHandler(index)}
-                    style={activeLink === index ? { color: "#f67e7e" } : null}
-                  ></i>
-                ))}
-              </div>
-            </Fragment>
-          </div>
-        ))}
-      </div>
-      <hr />
-      <table>
-        <thead>
-          <tr>
-            <th>S.No.</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.items.map((item) => (
-            <tr key={item.id}>
-              <td>{data.items.indexOf(item) + 1}</td>
-              <td>
-                <Link
-                  to={`/shop/${item.id}`}
-                  style={{ textDecoration: "underline" }}
-                >
-                  {item.fname} {item.lname}
-                </Link>
-              </td>
-              <td>
-                <button className="action_btn" onClick={() => handleEdit(item)}>
-                  <Link
-                    to={`/shop/edit/${item.id}`}
-                    style={{ color: "white", width: "100%" }}
-                  >
-                    Edit
-                  </Link>
-                </button>
-                <button
-                  className="action_btn"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {error === null ? (
+        <div>
+          {data.items.length > 0 ? (
+            <div>
+              {data.isLoading ? (
+                <div className="loader" />
+              ) : (
+                <div className="app_user">
+                  {value.map((val) => (
+                    <div key={val.id}>
+                      <Fragment>
+                        <img src={val.image} alt={val.fname} />
+                        <Phrase user={val} />
+                        <div className="app_icons">
+                          {icons.map((icon, index) => (
+                            <i
+                              className={icon}
+                              key={index}
+                              onMouseEnter={() => activeLinkHandler(index)}
+                              style={
+                                activeLink === index
+                                  ? { color: "#f67e7e" }
+                                  : null
+                              }
+                            ></i>
+                          ))}
+                        </div>
+                      </Fragment>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <hr />
+              <table>
+                <thead>
+                  <tr>
+                    <th>S.No.</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.items.map((item) => (
+                    <tr key={item.id}>
+                      <td>{data.items.indexOf(item) + 1}</td>
+                      <td>
+                        <Link
+                          to={`/shop/${item.id}`}
+                          style={{ textDecoration: "underline" }}
+                        >
+                          {item.fname} {item.lname}
+                        </Link>
+                      </td>
+                      <td>
+                        <button
+                          className="action_btn"
+                          onClick={() => handleEdit(item)}
+                        >
+                          <Link
+                            to={`/shop/edit/${item.id}`}
+                            style={{ color: "white", width: "100%" }}
+                          >
+                            Edit
+                          </Link>
+                        </button>
+                        <button
+                          className="action_btn"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <h1 style={{ textAlign: "centre", display: "block" }}>no data</h1>
+          )}
+        </div>
+      ) : (
+        <h1 style={{ textAlign: "centre", display: "block" }}>{error}</h1>
+      )}
     </div>
   );
 };

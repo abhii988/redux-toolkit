@@ -1,5 +1,8 @@
-export const fetchData = () => async (dispatch) => {
+export const fetchData = (setIsLoading, setError) => async (dispatch) => {
   const response = await fetch("https://randomuser.me/api/");
+  if (!response.ok) {
+    throw Error("Could not fetch the data!");
+  }
   const responseData = await response.json();
   const newData = responseData?.results.map((itm) => ({
     id: itm.login.uuid,
@@ -14,11 +17,12 @@ export const fetchData = () => async (dispatch) => {
     country: itm.location.country,
     image: itm.picture.large,
   }));
-  console.log("newData", newData);
   dispatch({
     type: "FETCH",
     payload: newData,
   });
+  dispatch({ type: "LOADING", payload: false });
+  // setIsLoading(false);
 };
 export const inputChange = (data) => {
   return {
@@ -55,3 +59,7 @@ export const clearForm = () => {
     type: "CLEAR_FORM",
   };
 };
+export const dataLoader = (data) => ({
+  type: "LOADING",
+  payload: data,
+});

@@ -14,10 +14,8 @@ const ItemDetail = () => {
     navigate("/shop");
   };
   const found = data.find((element) => {
-    console.log(element, "element");
     return element.id === params.id;
   });
-  console.log(found, "found");
   return (
     <div>
       <h1>Details of the items are:</h1>

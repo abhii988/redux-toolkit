@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
-// import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
 import RouteSwitch from "./components/RouteSwitch";
 // import "bootstrap/dist/css/bootstrap.min.css";
-// import { increment, decrement, login } from "./actions";
 import { fetchData } from "./redux/actions";
 
 function App() {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchData(setError)).catch((err) => {
+      setError(err.message);
+      // console.log("fetch error msg", err.message);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="app">
-      {<RouteSwitch></RouteSwitch>}
-      {/* <div>counter : {counter}</div>
-      <button onClick={() => dispatch(increment())}>+</button>
-      <button onClick={() => dispatch(decrement())}>-</button>
-      <br />
-      <button onClick={() => dispatch(login())}>login</button>
-      {logged ? <div>is logged in!</div> : <div>not logged in.</div>} */}
+      {<RouteSwitch error={error} setError={setError}></RouteSwitch>}
     </div>
   );
 }

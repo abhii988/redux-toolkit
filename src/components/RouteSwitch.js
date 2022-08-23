@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import AddItem from "./AddItem";
 import EditItem from "./EditItem";
 
-const RouteSwitch = () => {
+const RouteSwitch = ({ error, setError }) => {
   // const [auth, setAuth] = useState(null);
   const [auth, setAuth] = useState(
     JSON.parse(localStorage.getItem("user")) ?? true
@@ -36,7 +36,10 @@ const RouteSwitch = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/shop" element={<Shop />} />
+            <Route
+              path="/shop"
+              element={<Shop error={error} setError={setError} />}
+            />
             <Route path="/shop/:id" element={<ItemDetail />} />
             <Route path="/shop/add" element={<AddItem />} />
             <Route path="/shop/edit/:id" element={<EditItem />} />

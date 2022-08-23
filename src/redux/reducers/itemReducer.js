@@ -12,6 +12,7 @@ export const initialState = {
   image: "",
   items: [],
   isEdit: false,
+  isLoading: false,
 };
 
 export const itemReducer = (state = initialState, action) => {
@@ -38,6 +39,11 @@ export const itemReducer = (state = initialState, action) => {
         items: [...action.payload, ...state.items],
         // items: action.payload,
       };
+    case "LOADING":
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     case "EDIT":
       return {
         ...state,
@@ -48,8 +54,6 @@ export const itemReducer = (state = initialState, action) => {
         image: action.payload.image,
       };
     case "UPDATE":
-      console.log("update reducer state", state);
-      console.log("update reducer payload", action.payload);
       return {
         ...state,
         items: state.items.map((item) =>
