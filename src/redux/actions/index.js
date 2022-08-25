@@ -1,4 +1,4 @@
-export const fetchData = (setIsLoading, setError) => async (dispatch) => {
+export const fetchData = () => async (dispatch) => {
   const response = await fetch("https://randomuser.me/api/");
   if (!response.ok) {
     throw Error("Could not fetch the data!");

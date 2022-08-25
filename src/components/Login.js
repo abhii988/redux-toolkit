@@ -55,15 +55,9 @@ const Login = ({ auth, setAuth }) => {
   const emailInputIsInvalid = !validEmail && emailTouched;
   const passwordInputIsInvalid = !validPassword && passwordTouched;
 
-  const nameInputClass = !nameInputIsInvalid
-    ? "form-control"
-    : "form-control invalid";
-  const emailInputClass = !emailInputIsInvalid
-    ? "form-control"
-    : "form-control invalid";
-  const passwordInputClass = !passwordInputIsInvalid
-    ? "form-control"
-    : "form-control invalid";
+  const nameInputClass = !nameInputIsInvalid ? "" : "invalid";
+  const emailInputClass = !emailInputIsInvalid ? "" : "invalid";
+  const passwordInputClass = !passwordInputIsInvalid ? "" : "invalid";
 
   useEffect(() => {
     localStorage.setItem("username", details.name);

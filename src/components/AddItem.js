@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { inputChange, submit, clearForm } from "../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
+import { Button } from "react-bootstrap";
 
 const AddItem = () => {
   const navigate = useNavigate();
@@ -26,8 +27,15 @@ const AddItem = () => {
     store.dispatch(
       submit({
         id: date.toString(),
-        name: data.name,
-        desc: data.desc,
+        dob: data.dob,
+        username: data.username,
+        password: data.password,
+        fname: data.fname,
+        lname: data.lname,
+        email: data.email,
+        phone: data.phone,
+        city: data.city,
+        country: data.country,
         image: data.image,
       })
     );
@@ -37,55 +45,148 @@ const AddItem = () => {
 
   return (
     <>
-      <br />
+      <h1>Add User</h1>
       <div>
-        <button onClick={back}>Go Back ⬅</button>
+        <Button variant="light" className="btns" onClick={back}>
+          Go Back &#11013;
+        </Button>
       </div>
-      <br />
+      <hr />
       <form onSubmit={onSubmit}>
-        <div className="control-group">
+        <div className="">
           <div className="form-control">
-            <label htmlFor="name">Item Name:</label>
+            <label htmlFor="name">User's First Name:</label>
             <input
               type="text"
-              placeholder="Item Name"
-              name="name"
-              value={data.name}
+              placeholder="First Name..."
+              name="fname"
+              value={data.fname}
               // onBlur={inputNameBlurHandler}
               onChange={handleChange}
             />
           </div>
           <div className="form-control">
-            <label htmlFor="name">Item Description:</label>
+            <label htmlFor="name">User's Last Name:</label>
             <input
               type="text"
-              placeholder="Description"
-              name="desc"
-              value={data.desc}
-              // onBlur={inputDescBlurHandler}
+              placeholder="Last Name..."
+              name="lname"
+              value={data.lname}
+              // onBlur={inputNameBlurHandler}
               onChange={handleChange}
             />
           </div>
           <div className="form-control">
-            <label htmlFor="name">Item Image Link:</label>
+            <label htmlFor="name">User's Photo Link:</label>
             <input
               type="text"
-              placeholder="Image link"
+              placeholder="Photo Link..."
               name="image"
               value={data.image}
               // onBlur={inputImageBlurHandler}
               onChange={handleChange}
             />
           </div>
-          <div className="form-actions">
-            <button type="submit">Submit</button>
+          <div className="form-control">
+            <label htmlFor="name">User's Birth Date: </label>
+            <input
+              type="text"
+              placeholder="Date of Birth..."
+              name="dob"
+              value={data.dob}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's Username: </label>
+            <input
+              type="text"
+              placeholder="Username..."
+              name="username"
+              value={data.username}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>{" "}
+          <div className="form-control">
+            <label htmlFor="name">User's Password: </label>
+            <input
+              type="text"
+              placeholder="Password..."
+              name="password"
+              value={data.password}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's E-mail Ad.:</label>
+            <input
+              type="text"
+              placeholder="E-mail Address..."
+              name="email"
+              value={data.email}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's Phone No.:</label>
+            <input
+              type="text"
+              placeholder="Phone Number..."
+              name="phone"
+              value={data.phone}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's City/State:</label>
+            <input
+              type="text"
+              placeholder="Current City..."
+              name="city"
+              value={data.city}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's Country: </label>
+            <input
+              type="text"
+              placeholder="Current Country..."
+              name="country"
+              value={data.country}
+              // onBlur={inputNameBlurHandler}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Button
+              className="btns"
+              variant="outline-light"
+              type="submit"
+              style={{ fontSize: "18px" }}
+            >
+              Submit
+            </Button>{" "}
+            <Button
+              className="btns"
+              variant="outline-light"
+              type="reset"
+              value="Reset"
+              onClick={clear}
+              style={{ fontSize: "18px" }}
+            >
+              Clear Form
+            </Button>
           </div>
         </div>
       </form>
       <hr />
-      <div>
-        <button onClick={clear}>Clear Form</button>
-      </div>
     </>
   );
 };

@@ -1,15 +1,11 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
 import { useSelector } from "react-redux";
 
 const ItemDetail = () => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.totalItems.items);
   const params = useParams();
-  // const [item, setItem] = useState({
-  //   images: {},
-  // });
   const back = () => {
     navigate("/shop");
   };

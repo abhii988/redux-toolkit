@@ -1,9 +1,7 @@
 #add {
-  position: absolute;
-  margin-top: -5%;
-  margin-left: 85%;
   font-size: large;
-  width: auto;
+  width: 10%;
+  color: rgb(255, 251, 244);
 }
 
 .user {
@@ -17,8 +15,7 @@
   background-color: #f4faf8;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
-
-button {
+.button {
   margin: 20px auto;
   color: white;
   background: #333;
@@ -54,11 +51,17 @@ img {
 .app_icons .fas {
   margin: 0 30px;
   transition: all 0.2s ease;
+  border-radius: 100%;
+  border: 5px #d0cbcb;
 }
 
 .app_icons .fas:hover {
   transform: scale(1.1);
   cursor: pointer;
+  background-color: #e4dada;
+  box-shadow: 0 10px 30px 0 #c50a3666;
+  background-size: 0cm;
+  border-radius: 100%;
 }
 
 .loader {

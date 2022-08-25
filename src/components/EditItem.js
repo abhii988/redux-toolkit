@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { inputChange, update, clearForm } from "../redux/actions";
 import { useParams, useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
+import { Button } from "react-bootstrap";
 // import "./form.css";
 
 const EditItem = () => {
@@ -30,6 +31,8 @@ const EditItem = () => {
         id: params.id,
         fname: data.fname,
         lname: data.lname,
+        phone: data.phone,
+        email: data.email,
         image: data.image,
       })
     );
@@ -39,52 +42,88 @@ const EditItem = () => {
 
   return (
     <>
-      <br />
+      <h1>Edit User</h1>
       <div>
-        <button onClick={back}>Go Back ⬅</button>
+        <Button variant="light" className="btns" onClick={back}>
+          Go Back &#11013;
+        </Button>
       </div>
-      <br />
+      <hr />
       <form onSubmit={onSubmit}>
         <div className="control-group">
           <div className="form-control">
-            <label htmlFor="name">Item Name:</label>
+            <label htmlFor="name">User's First Name:</label>
             <input
               type="text"
-              placeholder="Item Name"
+              placeholder="First Name..."
               name="fname"
               value={data.fname}
               onChange={handleChange}
             />
           </div>
           <div className="form-control">
-            <label htmlFor="name">Item Description:</label>
+            <label htmlFor="name">User's Last Name:</label>
             <input
               type="text"
-              placeholder="Description"
+              placeholder="Last Name..."
               name="lname"
               value={data.lname}
               onChange={handleChange}
             />
           </div>
           <div className="form-control">
-            <label htmlFor="name">Item Image Link:</label>
+            <label htmlFor="name">User's Phone No.:</label>
             <input
               type="text"
-              placeholder="Image link"
+              placeholder="Phone Number..."
+              name="phone"
+              value={data.phone}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's E-mail Ad.:</label>
+            <input
+              type="text"
+              placeholder="E-mail Address..."
+              name="email"
+              value={data.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="name">User's Photo Link:</label>
+            <input
+              type="text"
+              placeholder="Image Link..."
               name="image"
               value={data.image}
               onChange={handleChange}
             />
           </div>
-          <div className="form-actions">
-            <button type="submit">Submit</button>
+          <div>
+            <Button
+              className="btns"
+              variant="outline-light"
+              type="submit"
+              style={{ fontSize: "18px" }}
+            >
+              Submit
+            </Button>{" "}
+            <Button
+              className="btns"
+              variant="outline-light"
+              type="reset"
+              value="Reset"
+              onClick={clear}
+              style={{ fontSize: "18px" }}
+            >
+              Clear Form
+            </Button>
           </div>
         </div>
       </form>
       <hr />
-      <div>
-        <button onClick={clear}>Clear Form</button>
-      </div>
       {/* <div className="form">
         <div className="title">Welcome</div>
         <div className="subtitle">Let's create your account!</div>

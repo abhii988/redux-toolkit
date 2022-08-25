@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
 import RouteSwitch from "./components/RouteSwitch";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchData } from "./redux/actions";
 
 function App() {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchData(setError)).catch((err) => {
+    dispatch(fetchData()).catch((err) => {
       setError(err.message);
       // console.log("fetch error msg", err.message);
     });

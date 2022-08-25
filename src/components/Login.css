@@ -1,5 +1,5 @@
 html {
-  background-color: #d7e9f2;
+  background-color: #d4f0f7;
 }
 
 body {
@@ -81,8 +81,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+input[type="submit"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -106,14 +105,12 @@ input[type="reset"] {
 }
 
 input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
+input[type="submit"]:hover {
   background-color: #39ace7;
 }
 
 input[type="button"]:active,
-input[type="submit"]:active,
-input[type="reset"]:active {
+input[type="submit"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -153,7 +150,8 @@ input[type="password"]:placeholder {
   color: #cccccc;
 }
 
-button {
+button,
+input[type="reset"] {
   background-color: #56baed;
   border: none;
   padding: 5px 8px;
@@ -170,11 +168,13 @@ button {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
-button:hover {
+button:hover,
+input[type="reset"]:hover {
   color: aliceblue;
   background-color: #1975a3;
 }
-button:active {
+button:active,
+input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -337,6 +337,8 @@ button:active {
 }
 .form-control {
   margin-bottom: 1rem;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 .form-control label {
@@ -349,7 +351,6 @@ button:active {
   font: inherit;
   padding: 0.5rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
   width: 20rem;
   max-width: 100%;
 }

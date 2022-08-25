@@ -51,6 +51,8 @@ export const itemReducer = (state = initialState, action) => {
         id: action.payload.id,
         fname: action.payload.fname,
         lname: action.payload.lname,
+        phone: action.payload.phone,
+        email: action.payload.email,
         image: action.payload.image,
       };
     case "UPDATE":
@@ -62,6 +64,8 @@ export const itemReducer = (state = initialState, action) => {
                 ...item,
                 fname: state.fname,
                 lname: state.lname,
+                phone: state.phone,
+                email: state.email,
                 image: state.image,
               }
             : item
@@ -75,8 +79,15 @@ export const itemReducer = (state = initialState, action) => {
     case "CLEAR_FORM":
       return {
         ...state,
-        name: "",
-        desc: "",
+        dob: "",
+        username: "",
+        password: "",
+        fname: "",
+        lname: "",
+        email: "",
+        phone: "",
+        city: "",
+        country: "",
         image: "",
         isEdit: false,
       };

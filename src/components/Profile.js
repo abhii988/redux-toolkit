@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const Profile = ({ Logout }) => {
   // const { user } = useParams();
@@ -7,11 +7,13 @@ const Profile = ({ Logout }) => {
     <div>
       <div className="welcome">
         <h2>
-          Welcome, <span> {localStorage.getItem("username")}</span>
+          Welcome,&nbsp;
+          <span> {localStorage.getItem("username")}</span>
         </h2>
-        <input type="submit" value="LOGOUT" onClick={Logout} />
-        <br />
-        <Link to="/dashboard">Go to Dashboard</Link>
+        <Button variant="outline- light" onClick={Logout} className="btns">
+          LOGOUT
+        </Button>
+        <hr />
       </div>
     </div>
   );
