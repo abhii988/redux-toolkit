@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import Shop from "./Shop";
 // import { FormContext } from "../../context/FormContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,8 +24,95 @@ const EditItem = () => {
   };
   const params = useParams();
 
+  //Form Validation
+  const [fnameTouched, setFnameTouched] = useState(false);
+  const [lnameTouched, setLnameTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [phoneTouched, setPhoneTouched] = useState(false);
+  const [imageTouched, setImageTouched] = useState(false);
+
+  const validFname = data.fname.trim() !== "";
+  const validLname = data.lname.trim() !== "";
+  let validEmail = data.email.trim() !== "";
+  let validPhone = data.phone.trim() !== "";
+  let validImage = data.image.trim() !== "";
+
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  if (emailRegex.test(data.email)) {
+    validEmail = true;
+  } else {
+    validEmail = false;
+  }
+
+  const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+  if (phoneRegex.test(data.phone)) {
+    validPhone = true;
+  } else {
+    validPhone = false;
+  }
+  const imageUrlRegex =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+  if (imageUrlRegex.test(data.image)) {
+    validImage = true;
+  } else {
+    validImage = false;
+  }
+
+  const fNameInputIsInvalid = !validFname && fnameTouched;
+  const lNameInputIsInvalid = !validLname && lnameTouched;
+  const emailInputIsInvalid = !validEmail && emailTouched;
+  const phoneInputIsInvalid = !validPhone && phoneTouched;
+  const imageInputIsInvalid = !validImage && imageTouched;
+
+  const fNameInputClass = !fNameInputIsInvalid
+    ? "form-control"
+    : "form-control invalid";
+  const lNameInputClass = !lNameInputIsInvalid
+    ? "form-control"
+    : "form-control invalid";
+  const imageInputClass = !imageInputIsInvalid
+    ? "form-control"
+    : "form-control invalid";
+  const emailInputClass = !emailInputIsInvalid
+    ? "form-control"
+    : "form-control invalid";
+  const phoneInputClass = !phoneInputIsInvalid
+    ? "form-control"
+    : "form-control invalid";
+
+  const inputFnameBlurHandler = (e) => {
+    setFnameTouched(true);
+  };
+  const inputLnameBlurHandler = (e) => {
+    setLnameTouched(true);
+  };
+  const inputEmailBlurHandler = (e) => {
+    setEmailTouched(true);
+  };
+  const inputPhoneBlurHandler = (e) => {
+    setPhoneTouched(true);
+  };
+  const inputImageBlurHandler = (e) => {
+    setImageTouched(true);
+  };
+  //Form Validation
+
   const onSubmit = (e) => {
     e.preventDefault();
+    setFnameTouched(true);
+    setLnameTouched(true);
+    setEmailTouched(true);
+    setPhoneTouched(true);
+    setImageTouched(true);
+    if (
+      !validFname ||
+      !validLname ||
+      !validEmail ||
+      !validPhone ||
+      !validImage
+    ) {
+      return;
+    }
     store.dispatch(
       update({
         id: params.id,
@@ -37,6 +124,11 @@ const EditItem = () => {
       })
     );
     store.dispatch(clearForm());
+    setFnameTouched(false);
+    setLnameTouched(false);
+    setEmailTouched(false);
+    setPhoneTouched(false);
+    setImageTouched(false);
     navigate("/shop");
   };
 
@@ -51,56 +143,76 @@ const EditItem = () => {
       <hr />
       <form onSubmit={onSubmit}>
         <div className="control-group">
-          <div className="form-control">
+          <div className={fNameInputClass}>
             <label htmlFor="name">User's First Name:</label>
             <input
               type="text"
               placeholder="First Name..."
               name="fname"
               value={data.fname}
+              onBlur={inputFnameBlurHandler}
               onChange={handleChange}
             />
           </div>
-          <div className="form-control">
+          {fNameInputIsInvalid && (
+            <p className="error-text">First Name cannot be empty!</p>
+          )}
+          <div className={lNameInputClass}>
             <label htmlFor="name">User's Last Name:</label>
             <input
               type="text"
               placeholder="Last Name..."
               name="lname"
               value={data.lname}
+              onBlur={inputLnameBlurHandler}
               onChange={handleChange}
             />
           </div>
-          <div className="form-control">
+          {lNameInputIsInvalid && (
+            <p className="error-text">Last Name cannot be empty!</p>
+          )}
+          <div className={phoneInputClass}>
             <label htmlFor="name">User's Phone No.:</label>
             <input
               type="text"
               placeholder="Phone Number..."
               name="phone"
               value={data.phone}
+              onBlur={inputPhoneBlurHandler}
               onChange={handleChange}
             />
           </div>
-          <div className="form-control">
+          {phoneInputIsInvalid && (
+            <p className="error-text">Please enter a valid Phone number!</p>
+          )}
+          <div className={emailInputClass}>
             <label htmlFor="name">User's E-mail Ad.:</label>
             <input
               type="text"
               placeholder="E-mail Address..."
               name="email"
               value={data.email}
+              onBlur={inputEmailBlurHandler}
               onChange={handleChange}
             />
           </div>
-          <div className="form-control">
+          {emailInputIsInvalid && (
+            <p className="error-text">Please enter a valid E-mail!</p>
+          )}
+          <div className={imageInputClass}>
             <label htmlFor="name">User's Photo Link:</label>
             <input
               type="text"
               placeholder="Image Link..."
               name="image"
               value={data.image}
+              onBlur={inputImageBlurHandler}
               onChange={handleChange}
             />
           </div>
+          {imageInputIsInvalid && (
+            <p className="error-text">Please enter a valid Image URL!</p>
+          )}
           <div>
             <Button
               className="btns"
@@ -124,34 +236,6 @@ const EditItem = () => {
         </div>
       </form>
       <hr />
-      {/* <div className="form">
-        <div className="title">Welcome</div>
-        <div className="subtitle">Let's create your account!</div>
-        <div className="input-container ic1">
-          <input id="firstname" className="input" type="text" placeholder=" " />
-          <div className="cut"></div>
-          <label htmlFor="firstname" className="placeholder">
-            First name
-          </label>
-        </div>
-        <div className="input-container ic2">
-          <input id="lastname" className="input" type="text" placeholder=" " />
-          <div className="cut"></div>
-          <label htmlFor="lastname" className="placeholder">
-            Last name
-          </label>
-        </div>
-        <div className="input-container ic2">
-          <input id="email" className="input" type="text" placeholder=" " />
-          <div className="cut cut-short"></div>
-          <label for="email" className="placeholder">
-            Email
-          </label>
-        </div>
-        <button type="text" className="submit">
-          submit
-        </button>
-      </div> */}
     </>
   );
 };

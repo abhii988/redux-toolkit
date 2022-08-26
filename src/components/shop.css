@@ -93,3 +93,45 @@ img {
     transform: rotate(360deg);
   }
 }
+/* Pagination Styling */
+.paginate {
+  justify-content: center;
+  display: flex;
+}
+.paginationBtn {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.paginationBtn a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #2b2eff;
+  color: #1b7bda;
+  cursor: pointer;
+}
+
+.paginationBtn a:hover {
+  color: white;
+  background-color: #1b7bda;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: #1b7bda;
+}
+
+.paginationDisabled a {
+  color: grey;
+  background-color: rgb(192, 187, 187);
+  cursor: default;
+}
+.paginationDisabled a:hover {
+  color: grey;
+  background-color: rgb(192, 187, 187);
+}

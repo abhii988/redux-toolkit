@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     dispatch(fetchData()).catch((err) => {
       setError(err.message);
-      // console.log("fetch error msg", err.message);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

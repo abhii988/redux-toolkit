@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 
 const ItemDetail = () => {
   const navigate = useNavigate();
@@ -17,7 +18,9 @@ const ItemDetail = () => {
       <h1>Details of the items are:</h1>
       <br />
       <div>
-        <button onClick={back}>Go Back ⬅</button>
+        <Button variant="light" className="btns" onClick={back}>
+          Go Back &#11013;
+        </Button>
       </div>
       <hr />
       <h2>User Id: {found.id}</h2>

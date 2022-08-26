@@ -37,7 +37,6 @@ export const itemReducer = (state = initialState, action) => {
       return {
         ...state,
         items: [...action.payload, ...state.items],
-        // items: action.payload,
       };
     case "LOADING":
       return {

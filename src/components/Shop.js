@@ -6,6 +6,7 @@ import { deleteItem, edit, fetchData, dataLoader } from "../redux/actions";
 import { store } from "../redux/store";
 import { Table, Button } from "react-bootstrap";
 //https://picsum.photos/500?random=1
+import ReactPaginate from "react-paginate";
 
 const Shop = ({ error, setError }) => {
   const navigate = useNavigate();
@@ -35,9 +36,9 @@ const Shop = ({ error, setError }) => {
   // console.log("value", value);
 
   const icons = [
-    "fas fa-user fa-2x",
-    "fas fa-envelope fa-2x",
-    "fas fa-phone fa-2x",
+    "fas fa-circle-user fa-2x",
+    "fas fa-envelope-open-text fa-2x",
+    "fas fa-mobile-screen fa-2x",
     "fas fa-calendar-alt fa-2x",
     "fas fa-solid fa-location-dot fa-2x",
     "fas fa-lock fa-2x",
@@ -55,6 +56,16 @@ const Shop = ({ error, setError }) => {
       `My username is "${user.username}" & password is "${user.password}".`,
     ];
     return <h3>{phrases[activeLink]}</h3>;
+  };
+  //Pagination Code:
+  const [pageNumber, setPageNumber] = useState(0);
+  const usersPerPage = 5;
+  const pagesVisited = pageNumber * usersPerPage;
+  // const displayData =
+  const pageCount = Math.ceil(data.items.length / usersPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
   return (
     <div className="asd">
@@ -117,7 +128,44 @@ const Shop = ({ error, setError }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.items.map((item) => (
+                  {data.items
+                    .slice(pagesVisited, pagesVisited + usersPerPage)
+                    .map((item) => {
+                      return (
+                        <>
+                          <tr key={item.id}>
+                            <td>{data.items.indexOf(item) + 1}</td>
+                            <td>
+                              <Link
+                                to={`/shop/${item.id}`}
+                                style={{ textDecoration: "underline" }}
+                              >
+                                {item.fname} {item.lname}
+                              </Link>
+                            </td>
+                            <td>{item.email}</td>
+                            <td>{item.phone}</td>
+                            <td>
+                              <Button
+                                variant="info"
+                                className="action_btn"
+                                onClick={() => handleEdit(item)}
+                              >
+                                Edit
+                              </Button>
+                              <Button
+                                variant="info"
+                                className="action_btn"
+                                onClick={() => handleDelete(item.id)}
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  {/* {data.items.map((item) => (
                     <tr key={item.id}>
                       <td>{data.items.indexOf(item) + 1}</td>
                       <td>
@@ -147,9 +195,22 @@ const Shop = ({ error, setError }) => {
                         </Button>
                       </td>
                     </tr>
-                  ))}
+                  ))} */}
                 </tbody>
               </Table>
+              <div className="paginate">
+                <ReactPaginate
+                  previousLabel={"Prev"}
+                  nextLabel={"Next"}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName={"paginationBtn"}
+                  previousLinkClassName={"previousBtn"}
+                  nextLinkClassName={"nextBtn"}
+                  disabledClassName={"paginationDisabled"}
+                  activeClassName={"paginationActive"}
+                />
+              </div>
             </div>
           ) : (
             <h1 style={{ textAlign: "centre", display: "block" }}>no data</h1>
