@@ -17,8 +17,10 @@ const Shop = ({ error, setError }) => {
   };
   const [activeLink, setActiveLink] = useState();
   const fetchButton = () => {
+    setError(null);
     store.dispatch(fetchData()).catch((err) => {
       setError(err.message);
+      store.dispatch(dataLoader(false));
     });
     store.dispatch(dataLoader(true));
     // setError("");
