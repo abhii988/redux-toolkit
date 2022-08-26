@@ -7,6 +7,7 @@ import { store } from "../redux/store";
 import { Table, Button } from "react-bootstrap";
 //https://picsum.photos/500?random=1
 import ReactPaginate from "react-paginate";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const Shop = ({ error, setError }) => {
   const navigate = useNavigate();
@@ -18,22 +19,20 @@ const Shop = ({ error, setError }) => {
   const fetchButton = () => {
     store.dispatch(fetchData()).catch((err) => {
       setError(err.message);
-      // console.log("fetch error msg", err.message);
     });
     store.dispatch(dataLoader(true));
+    // setError("");
   };
   const handleDelete = (id) => {
     store.dispatch(deleteItem({ id: id }));
+    setShow(false);
   };
   const handleEdit = (item) => {
     store.dispatch(edit(item));
     navigate(`/shop/edit/${item.id}`);
   };
-  // console.log(data.items[0]);
-  // let value = data.items[0];
   let value = [{ id: "" }];
   value = [data.items[0]];
-  // console.log("value", value);
 
   const icons = [
     "fas fa-circle-user fa-2x",
@@ -57,16 +56,26 @@ const Shop = ({ error, setError }) => {
     ];
     return <h3>{phrases[activeLink]}</h3>;
   };
+  //Delete Confirmation Code:
+  const [show, setShow] = useState(false);
+  const [toDelete, setToDelete] = useState("");
+  const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  const showDeleteModal = (item) => {
+    setToDelete(item);
+    setShow(true);
+  };
+  //Delete Confirmation
   //Pagination Code:
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 5;
   const pagesVisited = pageNumber * usersPerPage;
-  // const displayData =
   const pageCount = Math.ceil(data.items.length / usersPerPage);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  //Pagination
   return (
     <div className="asd">
       <h1>User's List:</h1>
@@ -128,74 +137,49 @@ const Shop = ({ error, setError }) => {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* {data.items.map((item) => (*/}
                   {data.items
                     .slice(pagesVisited, pagesVisited + usersPerPage)
                     .map((item) => {
                       return (
-                        <>
-                          <tr key={item.id}>
-                            <td>{data.items.indexOf(item) + 1}</td>
-                            <td>
-                              <Link
-                                to={`/shop/${item.id}`}
-                                style={{ textDecoration: "underline" }}
-                              >
-                                {item.fname} {item.lname}
-                              </Link>
-                            </td>
-                            <td>{item.email}</td>
-                            <td>{item.phone}</td>
-                            <td>
-                              <Button
-                                variant="info"
-                                className="action_btn"
-                                onClick={() => handleEdit(item)}
-                              >
-                                Edit
-                              </Button>
-                              <Button
-                                variant="info"
-                                className="action_btn"
-                                onClick={() => handleDelete(item.id)}
-                              >
-                                Delete
-                              </Button>
-                            </td>
-                          </tr>
-                        </>
+                        <tr key={item.id}>
+                          <td>{data.items.indexOf(item) + 1}</td>
+                          <td>
+                            <Link
+                              to={`/shop/${item.id}`}
+                              style={{ textDecoration: "underline" }}
+                            >
+                              {item.fname} {item.lname}
+                            </Link>
+                          </td>
+                          <td>{item.email}</td>
+                          <td>{item.phone}</td>
+                          <td>
+                            <Button
+                              variant="info"
+                              className="action_btn"
+                              onClick={() => handleEdit(item)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="info"
+                              className="action_btn"
+                              // onClick={() => handleDelete(item.id)}
+                              onClick={() => showDeleteModal(item)}
+                            >
+                              Delete
+                            </Button>
+                            <DeleteConfirmation
+                              show={show}
+                              handleClose={handleClose}
+                              handleDelete={handleDelete}
+                              toDelete={toDelete}
+                            />
+                          </td>
+                        </tr>
                       );
                     })}
-                  {/* {data.items.map((item) => (
-                    <tr key={item.id}>
-                      <td>{data.items.indexOf(item) + 1}</td>
-                      <td>
-                        <Link
-                          to={`/shop/${item.id}`}
-                          style={{ textDecoration: "underline" }}
-                        >
-                          {item.fname} {item.lname}
-                        </Link>
-                      </td>
-                      <td>{item.email}</td>
-                      <td>{item.phone}</td>
-                      <td>
-                        <Button
-                          variant="info"
-                          className="action_btn"
-                          onClick={() => handleEdit(item)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="info"
-                          className="action_btn"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))} */}
                 </tbody>
               </Table>
               <div className="paginate">
