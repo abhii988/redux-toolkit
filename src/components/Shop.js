@@ -8,6 +8,7 @@ import { Table, Button } from "react-bootstrap";
 //https://picsum.photos/500?random=1
 import ReactPaginate from "react-paginate";
 import DeleteConfirmation from "./DeleteConfirmation";
+import Count from "./Count";
 
 const Shop = ({ error, setError }) => {
   const navigate = useNavigate();
@@ -78,6 +79,30 @@ const Shop = ({ error, setError }) => {
     setPageNumber(selected);
   };
   //Pagination
+
+  //Search Code
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  // let user = state.users;
+  const searchItems = (searchValue) => {
+    setSearchInput(searchValue);
+    if (searchValue !== "") {
+      const filteredData = data.items.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(data.items);
+    }
+    console.log(searchValue, "searchValue2");
+  };
+  console.log(searchInput, "searchInput");
+  console.log(filteredResults, "filteredResults");
+
+  //Search
   return (
     <div className="asd">
       <h1>User's List:</h1>
@@ -94,6 +119,23 @@ const Shop = ({ error, setError }) => {
         Add User &#10011;
       </Button>
       <hr />
+      <div className="control-group">
+        <div className="form-control">
+          <Count
+            count={
+              filteredResults && searchInput === ""
+                ? data.items.length
+                : filteredResults.length
+            }
+          />
+          <input
+            icon="search"
+            placeholder="Search..."
+            onChange={(e) => searchItems(e.target.value)}
+            id="search"
+          />
+        </div>
+      </div>
       {error === null ? (
         <div>
           {data.items.length > 0 ? (
@@ -140,9 +182,8 @@ const Shop = ({ error, setError }) => {
                 </thead>
                 <tbody>
                   {/* {data.items.map((item) => (*/}
-                  {data.items
-                    .slice(pagesVisited, pagesVisited + usersPerPage)
-                    .map((item) => {
+                  {searchInput.length > 0 ? (
+                    filteredResults.map((item) => {
                       return (
                         <tr key={item.id}>
                           <td>{data.items.indexOf(item) + 1}</td>
@@ -181,7 +222,53 @@ const Shop = ({ error, setError }) => {
                           </td>
                         </tr>
                       );
-                    })}
+                    })
+                  ) : (
+                    <>
+                      {data.items
+                        .slice(pagesVisited, pagesVisited + usersPerPage)
+                        .map((item) => {
+                          return (
+                            <tr key={item.id}>
+                              <td>{data.items.indexOf(item) + 1}</td>
+                              <td>
+                                <Link
+                                  to={`/shop/${item.id}`}
+                                  style={{ textDecoration: "underline" }}
+                                >
+                                  {item.fname} {item.lname}
+                                </Link>
+                              </td>
+                              <td>{item.email}</td>
+                              <td>{item.phone}</td>
+                              <td>
+                                <Button
+                                  variant="info"
+                                  className="action_btn"
+                                  onClick={() => handleEdit(item)}
+                                >
+                                  Edit
+                                </Button>
+                                <Button
+                                  variant="info"
+                                  className="action_btn"
+                                  // onClick={() => handleDelete(item.id)}
+                                  onClick={() => showDeleteModal(item)}
+                                >
+                                  Delete
+                                </Button>
+                                <DeleteConfirmation
+                                  show={show}
+                                  handleClose={handleClose}
+                                  handleDelete={handleDelete}
+                                  toDelete={toDelete}
+                                />
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </>
+                  )}
                 </tbody>
               </Table>
               <div className="paginate">
