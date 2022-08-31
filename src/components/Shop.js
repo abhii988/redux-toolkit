@@ -2,7 +2,8 @@ import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./shop.css";
-import { deleteItem, edit, fetchData, dataLoader } from "../redux/actions";
+// import { deleteItem, edit, fetchData, dataLoader } from "../redux/actions";
+import { deleteItem, edit, fetchData, dataLoader } from "../redux/itemSlice";
 import { store } from "../redux/store";
 import { Table, Button } from "react-bootstrap";
 //https://picsum.photos/500?random=1
@@ -83,7 +84,6 @@ const Shop = ({ error, setError }) => {
   //Search Code
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  // let user = state.users;
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
     if (searchValue !== "") {
@@ -97,12 +97,31 @@ const Shop = ({ error, setError }) => {
     } else {
       setFilteredResults(data.items);
     }
-    console.log(searchValue, "searchValue2");
   };
-  console.log(searchInput, "searchInput");
-  console.log(filteredResults, "filteredResults");
-
   //Search
+
+  //Fetch Data
+  // const fetchers = async () => {
+  //   store.dispatch(dataLoader(true));
+  //   const response = await fetch("https://randomuser.me/api/");
+  //   const responseData = await response.json();
+  //   const newData = responseData?.results.map((itm) => ({
+  //     id: itm.login.uuid,
+  //     dob: itm.dob.date.slice(0, 10),
+  //     username: itm.login.username,
+  //     password: itm.login.password,
+  //     fname: itm.name.first,
+  //     lname: itm.name.last,
+  //     email: itm.email,
+  //     phone: itm.phone,
+  //     city: itm.location.city,
+  //     country: itm.location.country,
+  //     image: itm.picture.large,
+  //   }));
+  //   store.dispatch(fetcher(newData));
+  //   store.dispatch(dataLoader(false));
+  // };
+  //Fetch
   return (
     <div className="asd">
       <h1>User's List:</h1>
@@ -117,7 +136,15 @@ const Shop = ({ error, setError }) => {
       </Button>{" "}
       <Button variant="light" onClick={add} className="btns">
         Add User &#10011;
-      </Button>
+      </Button>{" "}
+      {/* <Button
+        variant="light"
+        disabled={data.isLoading}
+        onClick={!data.isLoading ? fetchers : null}
+        className="btns"
+      >
+        {data.isLoading ? "Loading…" : "Self User"} &#9850;
+      </Button> */}
       <hr />
       <div className="control-group">
         <div className="form-control">
@@ -271,7 +298,7 @@ const Shop = ({ error, setError }) => {
                   )}
                 </tbody>
               </Table>
-              <div className="paginate">
+              <div className="pagination">
                 <ReactPaginate
                   previousLabel={"Prev"}
                   nextLabel={"Next"}
@@ -284,6 +311,18 @@ const Shop = ({ error, setError }) => {
                   activeClassName={"paginationActive"}
                 />
               </div>
+              {/* <div class="center">
+                <div class="pagination">
+                  <a>&laquo;</a>
+                  <a>1</a>
+                  <a class="active">2</a>
+                  <a>3</a>
+                  <a>4</a>
+                  <a>5</a>
+                  <a>6</a>
+                  <a>&raquo;</a>
+                </div>
+              </div> */}
             </div>
           ) : (
             <h1 style={{ textAlign: "centre", display: "block" }}>no data</h1>

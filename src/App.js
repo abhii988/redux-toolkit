@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import RouteSwitch from "./components/RouteSwitch";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fetchData } from "./redux/actions";
+// import { fetchData } from "./redux/actions";
+import { fetchData } from "./redux/itemSlice";
 
 function App() {
   const [error, setError] = useState(null);

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 // import Shop from "./Shop";
 // import { FormContext } from "../../context/FormContext";
 import { useSelector, useDispatch } from "react-redux";
-import { inputChange, update, clearForm } from "../redux/actions";
+// import { inputChange, update, clearForm } from "../redux/actions";
+import { inputChange, update, clearForm } from "../redux/itemSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
 import { Button } from "react-bootstrap";
@@ -13,7 +14,7 @@ const EditItem = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.totalItems);
   const handleChange = (e) => {
-    dispatch(inputChange({ [e.target.name]: e.target.value }));
+    dispatch(inputChange({ name: e.target.name, value: e.target.value }));
   };
   const clear = () => {
     store.dispatch(clearForm());

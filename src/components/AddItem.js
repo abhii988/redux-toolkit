@@ -2,7 +2,8 @@ import React, { useState } from "react";
 // import Shop from "./Shop";
 // import { FormContext } from "../../context/FormContext";
 import { useSelector, useDispatch } from "react-redux";
-import { inputChange, submit, clearForm } from "../redux/actions";
+// import { inputChange, submit, clearForm } from "../redux/actions";
+import { inputChange, submit, clearForm } from "../redux/itemSlice";
 import { useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
 import { Button } from "react-bootstrap";
@@ -11,14 +12,15 @@ const AddItem = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.totalItems);
+
   const handleChange = (e) => {
-    dispatch(inputChange({ [e.target.name]: e.target.value }));
+    dispatch(inputChange({ name: e.target.name, value: e.target.value }));
   };
   const clear = () => {
     store.dispatch(clearForm());
   };
   const back = () => {
-    store.dispatch(clearForm());
+    dispatch(clearForm());
     navigate("/shop");
   };
   //Form Validation
