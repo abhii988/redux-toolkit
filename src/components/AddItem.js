@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-// import Shop from "./Shop";
-// import { FormContext } from "../../context/FormContext";
 import { useSelector, useDispatch } from "react-redux";
-// import { inputChange, submit, clearForm } from "../redux/actions";
 import { inputChange, submit, clearForm } from "../redux/itemSlice";
 import { useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
@@ -170,6 +167,7 @@ const AddItem = () => {
       !validEmail ||
       !validPhone ||
       !validImage ||
+      !validUsername ||
       !validPassword ||
       !validDob ||
       !validCity ||

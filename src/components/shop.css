@@ -40,6 +40,18 @@ img {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  animation: opaque 0.8s;
+}
+.phrase {
+  animation: opaque 0.8s;
+}
+@keyframes opaque {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .app_icons {
@@ -94,12 +106,6 @@ img {
   }
 }
 /* Pagination Styling */
-.center {
-  text-align: center;
-}
-.paginate {
-  display: inline-block;
-}
 .paginationBtn {
   width: 100%;
   height: 40px;

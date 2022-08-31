@@ -2,14 +2,13 @@ import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./shop.css";
-// import { deleteItem, edit, fetchData, dataLoader } from "../redux/actions";
 import { deleteItem, edit, fetchData, dataLoader } from "../redux/itemSlice";
 import { store } from "../redux/store";
 import { Table, Button } from "react-bootstrap";
-//https://picsum.photos/500?random=1
 import ReactPaginate from "react-paginate";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Count from "./Count";
+//https://picsum.photos/500?random=1
 
 const Shop = ({ error, setError }) => {
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const Shop = ({ error, setError }) => {
       `My address is ${user.city}, ${user.country}.`,
       `My username is "${user.username}" & password is "${user.password}".`,
     ];
-    return <h3>{phrases[activeLink]}</h3>;
+    return <h3 className="phrase">{phrases[activeLink]}</h3>;
   };
   //Delete Confirmation Code:
   const [show, setShow] = useState(false);
@@ -99,29 +98,30 @@ const Shop = ({ error, setError }) => {
     }
   };
   //Search
-
-  //Fetch Data
-  // const fetchers = async () => {
-  //   store.dispatch(dataLoader(true));
-  //   const response = await fetch("https://randomuser.me/api/");
-  //   const responseData = await response.json();
-  //   const newData = responseData?.results.map((itm) => ({
-  //     id: itm.login.uuid,
-  //     dob: itm.dob.date.slice(0, 10),
-  //     username: itm.login.username,
-  //     password: itm.login.password,
-  //     fname: itm.name.first,
-  //     lname: itm.name.last,
-  //     email: itm.email,
-  //     phone: itm.phone,
-  //     city: itm.location.city,
-  //     country: itm.location.country,
-  //     image: itm.picture.large,
-  //   }));
-  //   store.dispatch(fetcher(newData));
-  //   store.dispatch(dataLoader(false));
-  // };
+  /*
+  //Manual Fetch Data
+  const fetchers = async () => {
+    store.dispatch(dataLoader(true));
+    const response = await fetch("https://randomuser.me/api/");
+    const responseData = await response.json();
+    const newData = responseData?.results.map((itm) => ({
+      id: itm.login.uuid,
+      dob: itm.dob.date.slice(0, 10),
+      username: itm.login.username,
+      password: itm.login.password,
+      fname: itm.name.first,
+      lname: itm.name.last,
+      email: itm.email,
+      phone: itm.phone,
+      city: itm.location.city,
+      country: itm.location.country,
+      image: itm.picture.large,
+    }));
+    store.dispatch(fetcher(newData));
+    store.dispatch(dataLoader(false));
+  };
   //Fetch
+  */
   return (
     <div className="asd">
       <h1>User's List:</h1>
@@ -311,18 +311,6 @@ const Shop = ({ error, setError }) => {
                   activeClassName={"paginationActive"}
                 />
               </div>
-              {/* <div class="center">
-                <div class="pagination">
-                  <a>&laquo;</a>
-                  <a>1</a>
-                  <a class="active">2</a>
-                  <a>3</a>
-                  <a>4</a>
-                  <a>5</a>
-                  <a>6</a>
-                  <a>&raquo;</a>
-                </div>
-              </div> */}
             </div>
           ) : (
             <h1 style={{ textAlign: "centre", display: "block" }}>no data</h1>

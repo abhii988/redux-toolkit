@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-// import Shop from "./Shop";
-// import { FormContext } from "../../context/FormContext";
 import { useSelector, useDispatch } from "react-redux";
-// import { inputChange, update, clearForm } from "../redux/actions";
 import { inputChange, update, clearForm } from "../redux/itemSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { store } from "../redux/store";
 import { Button } from "react-bootstrap";
-// import "./form.css";
 
 const EditItem = () => {
   const navigate = useNavigate();
