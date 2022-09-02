@@ -2,7 +2,14 @@ import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./shop.css";
-import { deleteItem, edit, fetchData, dataLoader } from "../redux/itemSlice";
+import {
+  deleteItem,
+  edit,
+  // fetchData,
+  dataLoader,
+  errors,
+  getUser,
+} from "../redux/itemSlice";
 import { store } from "../redux/store";
 import { Table, Button } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
@@ -10,7 +17,7 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import Count from "./Count";
 //https://picsum.photos/500?random=1
 
-const Shop = ({ error, setError }) => {
+const Shop = () => {
   const navigate = useNavigate();
   const data = useSelector((state) => state.totalItems);
   const add = () => {
@@ -18,11 +25,13 @@ const Shop = ({ error, setError }) => {
   };
   const [activeLink, setActiveLink] = useState();
   const fetchButton = () => {
-    setError(null);
-    store.dispatch(fetchData()).catch((err) => {
-      setError(err.message);
-      store.dispatch(dataLoader(false));
-    });
+    store.dispatch(errors(null));
+    store.dispatch(getUser());
+    // setError(null);
+    // store.dispatch(fetchData()).catch((err) => {
+    //   setError(err.message);
+    //   store.dispatch(dataLoader(false));
+    // });
     store.dispatch(dataLoader(true));
     // setError("");
   };
@@ -163,7 +172,7 @@ const Shop = ({ error, setError }) => {
           />
         </div>
       </div>
-      {error === null ? (
+      {data.errorMessage === null ? (
         <div>
           {data.items.length > 0 ? (
             <div>
@@ -317,7 +326,9 @@ const Shop = ({ error, setError }) => {
           )}
         </div>
       ) : (
-        <h1 style={{ textAlign: "centre", display: "block" }}>{error}</h1>
+        <h1 style={{ textAlign: "centre", display: "block" }}>
+          {data.errorMessage}
+        </h1>
       )}
     </div>
   );

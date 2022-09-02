@@ -1,33 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-// import { applyMiddleware, createStore, compose } from "redux";
-// import thunk from "redux-thunk";
-// import allReducers from "./reducers";
-// import { itemReducer } from "./reducers/itemReducer";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import itemReducer from "./itemSlice";
+import createSagaMiddleware from "redux-saga";
+import { watcherSaga } from "./sagas/rootSaga";
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
     totalItems: itemReducer,
   },
+  middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware],
 });
-
-// const middlewares = [thunk];
-
-// export const store = createStore(
-//   allReducers,
-//   {},
-//   // localStorage.getItem("redux")
-//   //   ? JSON.parse(
-//   //       localStorage.getItem("redux") ? localStorage.getItem("redux") : "{}"
-//   //     )
-//   //   : {},
-//   compose(
-//     applyMiddleware(...middlewares),
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-//   )
-// );
-
-// store.subscribe((state) => {
-//   console.log(state);
-//   localStorage.setItem("redux", JSON.stringify(state.getState()));
-// });
+sagaMiddleware.run(watcherSaga);
