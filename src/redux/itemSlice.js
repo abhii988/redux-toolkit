@@ -1,25 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// export const fetchData = createAsyncThunk("item/fetchData", async () => {
-//   const response = fetch("https://randomuser.me/api/")
-//     .then((data) => data.json())
-//     .then((responseData) => {
-//       return responseData?.results.map((itm) => ({
-//         id: itm.login.uuid,
-//         dob: itm.dob.date.slice(0, 10),
-//         username: itm.login.username,
-//         password: itm.login.password,
-//         fname: itm.name.first,
-//         lname: itm.name.last,
-//         email: itm.email,
-//         phone: itm.phone,
-//         city: itm.location.city,
-//         country: itm.location.country,
-//         image: itm.picture.large,
-//       }));
-//     });
-//   return response;
-// });
+export const fetchData = createAsyncThunk("item/fetchData", async () => {
+  const response = fetch("https://randomuser.me/api/")
+    .then((data) => data.json())
+    .then((responseData) => {
+      return responseData?.results.map((itm) => ({
+        id: itm.login.uuid,
+        dob: itm.dob.date.slice(0, 10),
+        username: itm.login.username,
+        password: itm.login.password,
+        fname: itm.name.first,
+        lname: itm.name.last,
+        email: itm.email,
+        phone: itm.phone,
+        city: itm.location.city,
+        country: itm.location.country,
+        image: itm.picture.large,
+      }));
+    });
+  return response;
+});
 
 const itemSlice = createSlice({
   name: "totalItems",
@@ -98,19 +98,19 @@ const itemSlice = createSlice({
       state.errorMessage = action.payload;
     },
   },
-  // extraReducers: {
-  //   [fetchData.pending]: (state) => {
-  //     state.isLoading = true;
-  //   },
-  //   [fetchData.fulfilled]: (state, action) => {
-  //     state.isLoading = false;
-  //     state.items = [...action.payload, ...state.items];
-  //     // state.items = action.payload.concat(state.items);
-  //   },
-  //   [fetchData.rejected]: (state) => {
-  //     state.isLoading = false;
-  //   },
-  // },
+  extraReducers: {
+    [fetchData.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchData.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.items = [...action.payload, ...state.items];
+      // state.items = action.payload.concat(state.items);
+    },
+    [fetchData.rejected]: (state) => {
+      state.isLoading = false;
+    },
+  },
 });
 
 export const {
